@@ -184,7 +184,6 @@
       </div>
     </div>
     <form id="prompt-form">
-      {{ form.csrf_token }}
       <input type="text" name="prompt" id="prompt" placeholder="Enter your prompt">
       <button type="submit" id="submit-btn">Send</button>
     </form>
@@ -192,7 +191,7 @@
 
   <script>
 
-    let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+    // let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     var chatIcon = document.querySelector("#chat-icon");
     var chatbotContainer = document.querySelector("#chatbot-container");
     var closeIcon = document.querySelector("#close-icon");
@@ -329,8 +328,7 @@
         method: "POST",
         body: JSON.stringify({ prompt: prompt }),
         headers: {
-          "Content-Type": "application/json",
-          'X-CSRFToken': csrfToken,
+          "Content-Type": "application/json"
         }
       })
         .then(function (response) {

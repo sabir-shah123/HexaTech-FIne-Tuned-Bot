@@ -44,7 +44,7 @@ def construct_index(directory_path):
     return index
 
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
 
 @app.route('/ask', methods=['POST'])
@@ -57,7 +57,7 @@ def ask():
         return "I'm sorry, I couldn't generate a response."
 
 @app.route('/send_prompt', methods=['POST'])
-@csrf_protect
+# @csrf_protect
 def send_prompt():
     prompt = json.loads(request.data)['prompt']
     response = ask_bot(prompt)
