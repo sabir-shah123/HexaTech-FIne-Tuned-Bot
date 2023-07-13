@@ -363,16 +363,16 @@
 
     // Delete local storage after one day
     setTimeout(deleteLocalStorageAfterOneDay, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
-    // window.onload = function () {
-    //     if(window.top==window.self || location.ancestorOrigins.length==0){
-    //          location.href='about:blank';
-    //     }else{
-    //       if(![...location.ancestorOrigins
-    //       ].some(t=>t.includes('https://app.hexatechsolution.com','https://app.jdfunnel.com'))){
-    //           location.href='about:blank';
-    //       }
-    //     }
-    // }
+    window.onload = function () {
+        if(window.top==window.self || location.ancestorOrigins.length==0){
+             location.href='about:blank';
+        }else{
+          if(![...location.ancestorOrigins
+          ].some(t=>t.includes('https://app.hexatechsolution.com','https://app.jdfunnel.com'))){
+              location.href='about:blank';
+          }
+        }
+    }
  </script>
 </body>
 
