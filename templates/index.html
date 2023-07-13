@@ -367,11 +367,13 @@
         if (window.top == window.self || location.ancestorOrigins.length == 0) {
           location.href = 'about:blank';
         } else {
+          console.log("I am here to open")
           var allowedDomains = ['https://app.hexatechsolution.com', 'https://app.jdfunnel.com'];
           var parentUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
 
           if (!allowedDomains.includes(parentUrl)) {
-            location.href = 'about:blank';
+            // location.href = 'about:blank';
+            console.log("i am okay")
           }
         }
       };
