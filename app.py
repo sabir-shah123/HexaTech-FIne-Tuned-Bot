@@ -45,7 +45,7 @@ def construct_index(directory_path):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html',csrf_token=csrf.generate_csrf())
 
 @app.route('/ask', methods=['POST'])
 def ask():
