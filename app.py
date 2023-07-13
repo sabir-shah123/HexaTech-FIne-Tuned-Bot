@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, session
-from flask_wtf.csrf import CSRFProtect
 import json
 import os
 import openai
@@ -11,7 +10,6 @@ from langchain import OpenAI
 app = Flask(__name__)
 
 app.secret_key =   os.urandom(24)
-csrf = CSRFProtect(app)
 # Set the OpenAI API key
 os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -45,7 +43,7 @@ def construct_index(directory_path):
 
 @app.route('/')
 def home():
-    return render_template('index.html',csrf_token=csrf.generate_csrf())
+    return render_template('index.html')
 
 @app.route('/ask', methods=['POST'])
 def ask():
@@ -57,7 +55,6 @@ def ask():
         return "I'm sorry, I couldn't generate a response."
 
 @app.route('/send_prompt', methods=['POST'])
-# @csrf_protect
 def send_prompt():
     prompt = json.loads(request.data)['prompt']
     response = ask_bot(prompt)
