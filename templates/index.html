@@ -365,7 +365,8 @@
     setTimeout(deleteLocalStorageAfterOneDay, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
     window.onload = function () {
         if (window.top == window.self || location.ancestorOrigins.length == 0) {
-          location.href = 'about:blank';
+          console.log("I am here to close")
+          // location.href = 'about:blank';
         } else {
           console.log("I am here to open")
           var allowedDomains = ['https://app.hexatechsolution.com', 'https://app.jdfunnel.com'];
