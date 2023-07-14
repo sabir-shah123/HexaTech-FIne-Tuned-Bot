@@ -86,10 +86,9 @@ def ask_bot(prompt, input_index='index.json'):
 
 if __name__ == '__main__':
     training_folder= 'data'
-    #os.getenv("TRAINING_FOLDER")
     if not os.path.exists(training_folder):
         print("Training folder does not exist. Please create a folder named " + training_folder + " and add training files to it.")
         exit()
-    print ("Constructing index..." + training_folder)
     index = construct_index(training_folder)
-    app.run(debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
