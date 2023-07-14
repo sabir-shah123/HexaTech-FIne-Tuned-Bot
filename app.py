@@ -14,7 +14,7 @@ app.secret_key =   os.urandom(24)
 os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
-app.config['SERVER_NAME'] = 'hexabot.hexatechsolution.com'
+# app.config['SERVER_NAME'] = 'hexabot.hexatechsolution.com'
 
 #dt.load_dotenv()
 #openai.api_key = os.getenv("OPENAI_API_KEY")
