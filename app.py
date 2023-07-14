@@ -11,8 +11,6 @@ app = Flask(__name__)
 
 app.secret_key =   os.urandom(24)
 # Set the OpenAI API key
-os.environ["OPENAI_API_KEY"] = "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"
-openai.api_key = os.environ["OPENAI_API_KEY"]
 
 def open_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as infile:
@@ -41,7 +39,8 @@ def domain_auth():
     print(response)
     try:
         response_data = response.json()
-        session['api_key'] = response_data['key']
+        os.environ["OPENAI_API_KEY"] = response_data['key']
+        openai.api_key = os.environ["OPENAI_API_KEY"]
         return jsonify(['success'])
     except ValueError as e:
         error_message = f"Error decoding JSON: {str(e)}"
