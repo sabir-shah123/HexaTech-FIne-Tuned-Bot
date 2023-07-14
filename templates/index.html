@@ -345,14 +345,14 @@
     setTimeout(deleteLocalStorageAfterOneDay, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
     window.onload = function () {
       if (window.top == window.self || location.ancestorOrigins.length == 0) {
-        location.href = 'about:blank';
+        location.href = '/contact';
       } else {
         var allowedDomains = ['https://app.hexatechsolution.com', 'https://app.jdfunnel.com'];
         // var parentUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
         var parentUrl = parent.location.href;
 
         if (!allowedDomains.includes(parentUrl)) {
-          location.href = 'about:blank';
+          location.href = "/contact"
         }
 
         let parentURL = parent.location.href;
@@ -366,17 +366,15 @@
         })
           .then(response => response.json())
           .then(data => {
-            // Handle the response data here
             toastr.success("Domain Authenticated Successfully");
           })
           .catch(error => {
-            // Handle any errors
-            // console.log(error);
+
             toastr.error("Domain Authentication Failed");
           });
 
-        // }
-      };
+      }
+    };
 
 
   </script>

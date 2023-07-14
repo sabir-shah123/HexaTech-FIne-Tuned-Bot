@@ -20,6 +20,10 @@ def open_file(filepath):
 def home():
     return render_template('index.html')
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 @app.route('/domain_auth', methods=['POST'])
 def domain_auth():
     parent_url = request.json['parentURL']
@@ -54,6 +58,7 @@ def ask():
         return response
     else:
         return "I'm sorry, I couldn't generate a response."
+
 
 @app.route('/send_prompt', methods=['POST'])
 def send_prompt():
