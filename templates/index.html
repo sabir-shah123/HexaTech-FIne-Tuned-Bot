@@ -2,8 +2,11 @@
 <html>
 
 <head>
-  <title>GPT-3 Virtual Assistant</title>
+  <title>HexBot</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       background-color: #f7f7f7;
@@ -176,6 +179,9 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     var chatbotContainer = document.querySelector("#chatbot-container");
     var conversation = document.querySelector("#conversation");
@@ -348,29 +354,28 @@
         if (!allowedDomains.includes(parentUrl)) {
           location.href = 'about:blank';
         }
-      }
-    };
 
-    window.onload = function () {
-      let parentURL = parent.location.href;
+        let parentURL = parent.location.href;
 
-      fetch('/domain_auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ parentURL: parentURL })
-      })
-        .then(response => response.json())
-        .then(data => {
-          // Handle the response data here
-          console.log(data);
-
+        fetch('/domain_auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ parentURL: parentURL })
         })
-        .catch(error => {
-          // Handle any errors
-          console.log(error);
-        });
+          .then(response => response.json())
+          .then(data => {
+            // Handle the response data here
+            toastr.success("Domain Authenticated Successfully");
+          })
+          .catch(error => {
+            // Handle any errors
+            // console.log(error);
+            toastr.error("Domain Authentication Failed");
+          });
+
+      }
     };
 
 
