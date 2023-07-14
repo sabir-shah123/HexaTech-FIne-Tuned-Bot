@@ -19,7 +19,7 @@
       width: 100%;
       height: 100%;
       background-color: #f5f5f5;
-      overflow: hidden; 
+      overflow: hidden;
     }
 
     #conversation {
@@ -90,7 +90,7 @@
       align-items: center;
       margin-bottom: 16px;
       gap: 13px;
-      
+
     }
 
     .user-message {
@@ -337,19 +337,19 @@
 
     // Delete local storage after one day
     setTimeout(deleteLocalStorageAfterOneDay, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
-    // window.onload = function () {
-    //     if (window.top == window.self || location.ancestorOrigins.length == 0) {
-    //       location.href = 'about:blank';
-    //     } else {
-    //       var allowedDomains = ['https://app.hexatechsolution.com', 'https://app.jdfunnel.com'];
-    //       // var parentUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
-    //       var parentUrl = parent.location.href;
+    window.onload = function () {
+      if (window.top == window.self || location.ancestorOrigins.length == 0) {
+        location.href = 'about:blank';
+      } else {
+        var allowedDomains = ['https://app.hexatechsolution.com', 'https://app.jdfunnel.com'];
+        // var parentUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
+        var parentUrl = parent.location.href;
 
-    //       if (!allowedDomains.includes(parentUrl)) {
-    //         location.href = 'about:blank';
-    //       }
-    //     }
-    //   };
+        if (!allowedDomains.includes(parentUrl)) {
+          location.href = 'about:blank';
+        }
+      }
+    };
 
     window.onload = function () {
       let parentURL = parent.location.href;
