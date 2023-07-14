@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 import json
 import os
 import openai
 import PyPDF2
 from gpt_index import SimpleDirectoryReader, GPTSimpleVectorIndex, LLMPredictor, PromptHelper
 from langchain import OpenAI
-
+import requests
 
 app = Flask(__name__)
 
@@ -14,38 +14,38 @@ app.secret_key =   os.urandom(24)
 os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
-# app.config['SERVER_NAME'] = 'hexabot.hexatechsolution.com'
-
-#dt.load_dotenv()
-#openai.api_key = os.getenv("OPENAI_API_KEY")
-
 def open_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as infile:
         return infile.read()
 
-def construct_index(directory_path):
-    max_input_size = 4096
-    num_outputs = 256
-    max_chunk_overlap = 0.2  #Note : Use float value between 0 and 1
-    chunk_size_limit = 600
-    # company name and bot names from .env file
-    bot_name = 'HexaTech' 
-    #os.getenv("BOT_NAME")
-    company_name = 'HTS'
-    # os.getenv("COMPANY_NAME")
-    
-    introduction = f"{bot_name} is a chatbot that can answer questions about {company_name}."
-    prompt_helper = PromptHelper(max_input_size, num_outputs, max_chunk_overlap, chunk_size_limit=chunk_size_limit)
-    # Define LLM to train the file
-    llm_predictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-davinci-003", max_tokens=num_outputs))
-    documents = SimpleDirectoryReader(directory_path).load_data()
-    index = GPTSimpleVectorIndex(documents, llm_predictor=llm_predictor, prompt_helper=prompt_helper)
-    index.save_to_disk('index.json')
-    return index
-
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route('/domain_auth', methods=['POST'])
+def domain_auth():
+    parent_url = request.json['parentURL']
+    print(parent_url)
+    # API call to get the domain name
+    domain_name = "http://propertyqualification.hexatechsolution.com/api/domain-check"
+    # get data
+    data = {
+        "parentURL": parent_url
+    }
+    # header user agent
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
+        'Content-Type': 'application/json'
+    }
+    response = requests.get(domain_name, data=json.dumps(data), headers=headers)
+    print(response)
+    try:
+        response_data = response.json()
+        session['api_key'] = response_data['key']
+        return jsonify(['success'])
+    except ValueError as e:
+        error_message = f"Error decoding JSON: {str(e)}"
+        return jsonify({'error': error_message}), 500
 
 @app.route('/ask', methods=['POST'])
 def ask():
@@ -89,5 +89,6 @@ if __name__ == '__main__':
     if not os.path.exists(training_folder):
         print("Training folder does not exist. Please create a folder named " + training_folder + " and add training files to it.")
         exit()
-    index = construct_index(training_folder)
+    # print(request.referrer)
+    # index = construct_index(training_folder)
     app.run(debug=True)
