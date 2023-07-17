@@ -429,7 +429,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          "X-CSRFToken": csrfToken
+          "X-CSRFToken": $('meta[name="csrf-token"]').attr('content')
         },
         body: JSON.stringify({ parentURL: topUrl })
       })
