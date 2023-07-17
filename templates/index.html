@@ -169,7 +169,7 @@
     </div>
     <div class="send-form">
       <form id="prompt-form">
-        
+        <input type="hidden"  value="{{ csrf_token() }}" id="csrf_token">
         <input type="text" name="prompt" id="prompt" placeholder="Enter your prompt">
         <button type="submit" id="submit-btn">Send</button>
       </form>
@@ -185,8 +185,7 @@
     var conversation = document.querySelector("#conversation");
     var promptForm = document.querySelector("#prompt-form");
     var promptInput = document.querySelector("#prompt");
-    var csrfToken = "{{ csrf_token() }}";
-
+   
     function addMessageToConversation(sender, message) {
       var avatarIcon = (sender === "user")
         ? "https://img.icons8.com/plasticine/100/guest-male.png"
@@ -306,7 +305,7 @@
         body: JSON.stringify({ prompt: prompt }),
         headers: {
           "Content-Type": "application/json",
-          "X-CSRFToken" : csrfToken
+          "X-CSRFToken" :  document.querySelector('#csrf_token').value
         }
       })
         .then(function (response) {
@@ -359,7 +358,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-             "X-CSRFToken": csrfToken
+             "X-CSRFToken": document.querySelector('#csrf_token').value
         },
         body: JSON.stringify({ parentURL: topUrl })
       })
