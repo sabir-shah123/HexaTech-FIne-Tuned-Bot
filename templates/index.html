@@ -3,6 +3,10 @@
 
 <head>
   <title>HexaBot</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- csrf token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
     integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
@@ -169,14 +173,13 @@
     </div>
     <div class="send-form">
       <form id="prompt-form">
-        <input type="hidden"  value="{{ csrf_token() }}" id="csrf_token">
         <input type="text" name="prompt" id="prompt" placeholder="Enter your prompt">
         <button type="submit" id="submit-btn">Send</button>
       </form>
     </div>
   </div>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"
-  integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
     integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -185,7 +188,9 @@
     var conversation = document.querySelector("#conversation");
     var promptForm = document.querySelector("#prompt-form");
     var promptInput = document.querySelector("#prompt");
-   
+    var csrfToken = document.querySelector("[name=csrf-token]").content;
+    console.log(csrfToken);
+
     function addMessageToConversation(sender, message) {
       var avatarIcon = (sender === "user")
         ? "https://img.icons8.com/plasticine/100/guest-male.png"
@@ -305,7 +310,7 @@
         body: JSON.stringify({ prompt: prompt }),
         headers: {
           "Content-Type": "application/json",
-          "X-CSRFToken" :  document.querySelector('#csrf_token').value
+          "X-CSRFToken": csrfToken
         }
       })
         .then(function (response) {
@@ -358,7 +363,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-             "X-CSRFToken": document.querySelector('#csrf_token').value
+          "X-CSRFToken": csrfToken
         },
         body: JSON.stringify({ parentURL: topUrl })
       })
@@ -366,8 +371,8 @@
         .then(data => {
           if (data.status === 'success') {
             toastr.success("Domain Authenticated Successfully");
-          }else{
-             toastr.error(data.error);
+          } else {
+            toastr.error(data.error);
           }
         })
         .catch(error => {
