@@ -343,23 +343,24 @@
 
     // Delete local storage after one day
     setTimeout(deleteLocalStorageAfterOneDay, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
-     var parentUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
     window.onload = function () {
       if (window.top == window.self || location.ancestorOrigins.length == 0) {
         location.href = '/contact';
       } else {
+        var parentUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
         var allowedDomains = ['https://app.hexatechsolution.com', 'https://app.jdfunnel.com'];
         if (!allowedDomains.includes(parentUrl)) {
           location.href = "/contact"
         }
       }
 
+      topUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
       fetch('/domain_auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ parentURL: parentURL })
+        body: JSON.stringify({ parentURL: topUrl })
       })
         .then(response => response.json())
         .then(data => {
