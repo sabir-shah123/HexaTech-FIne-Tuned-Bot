@@ -423,8 +423,8 @@
         }
       }
 
-      // topUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
-      topUrl = parent.location.href;
+      topUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
+      // topUrl = parent.location.href;
       fetch('/domain_auth', {
         method: 'POST',
         headers: {
