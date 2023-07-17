@@ -6,10 +6,12 @@ import PyPDF2
 from gpt_index import SimpleDirectoryReader, GPTSimpleVectorIndex, LLMPredictor, PromptHelper
 from langchain import OpenAI
 import requests
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
 
 app.secret_key =   os.urandom(24)
+csrf = CSRFProtect(app)
 # Set the OpenAI API key
 
 def open_file(filepath):
@@ -40,12 +42,12 @@ def domain_auth():
         'Content-Type': 'application/json'
     }
     response = requests.get(domain_name, data=json.dumps(data), headers=headers)
-    print(response)
     try:
         response_data = response.json()
         os.environ["OPENAI_API_KEY"] = response_data['key']
         openai.api_key = os.environ["OPENAI_API_KEY"]
-        return jsonify(['success'])
+        # status success
+        return jsonify({'status': 'success'})
     except ValueError as e:
         error_message = f"Error decoding JSON: {str(e)}"
         return jsonify({'error': error_message}), 500
