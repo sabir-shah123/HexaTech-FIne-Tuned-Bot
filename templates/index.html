@@ -445,6 +445,12 @@
           toastr.error("Seems, something went wrong. Please try again later.");
         });
 
+        // delete the typing indicator
+        var typingIndicator = document.querySelector(".typing-indicator");
+        if (typingIndicator) {
+           $(".typing-indicator").closest(".bot-message").remove();
+        }
+
     };
 
 
