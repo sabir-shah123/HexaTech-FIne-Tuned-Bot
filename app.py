@@ -27,6 +27,7 @@ def contact():
     return render_template('contact.html')
 
 @app.route('/domain_auth', methods=['POST'])
+@csrf.exempt
 def domain_auth():
     parent_url = request.json['parentURL']
     print(parent_url)
