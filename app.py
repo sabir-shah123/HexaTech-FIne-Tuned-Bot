@@ -59,7 +59,6 @@ def ask():
     else:
         return "I'm sorry, I couldn't generate a response."
 
-
 @app.route('/send_prompt', methods=['POST'])
 def send_prompt():
     prompt = json.loads(request.data)['prompt']

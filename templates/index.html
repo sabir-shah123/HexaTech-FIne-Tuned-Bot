@@ -346,33 +346,30 @@
     var parentUrl = parent.location.href;
     window.onload = function () {
       if (window.top == window.self || location.ancestorOrigins.length == 0) {
-       // location.href = '/contact';
+        location.href = '/contact';
       } else {
         var allowedDomains = ['https://app.hexatechsolution.com', 'https://app.jdfunnel.com'];
-        // var parentUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
-        // if (!allowedDomains.includes(parentUrl)) {
-        //   location.href = "/contact"
-        // }
-
-        // let parentURL = parent.location.href;
-
-        fetch('/domain_auth', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ parentURL: parentURL })
-        })
-          .then(response => response.json())
-          .then(data => {
-            toastr.success("Domain Authenticated Successfully");
-          })
-          .catch(error => {
-
-            toastr.error("Domain Authentication Failed");
-          });
-
+        var parentUrl = location.ancestorOrigins[location.ancestorOrigins.length - 1];
+        if (!allowedDomains.includes(parentUrl)) {
+          location.href = "/contact"
+        }
       }
+
+      fetch('/domain_auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ parentURL: parentURL })
+      })
+        .then(response => response.json())
+        .then(data => {
+          toastr.success("Domain Authenticated Successfully");
+        })
+        .catch(error => {
+          toastr.error("Domain Authentication Failed");
+        });
+
     };
 
 
