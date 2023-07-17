@@ -381,6 +381,7 @@
           return response.text();
         })
         .then(function (response) {
+          // if response contain
           conversation.removeChild(typingIndicator);
           addMessageToConversation("bot", response);
         });
@@ -436,6 +437,7 @@
         .then(response => response.json())
         .then(data => {
           if (data.status === 'success') {
+            
             toastr.success("Domain Authenticated Successfully");
           } else {
             toastr.error(data.error);
