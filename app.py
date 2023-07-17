@@ -45,10 +45,11 @@ def domain_auth():
     response = requests.get(domain_name, data=json.dumps(data), headers=headers)
     try:
         response_data = response.json()
-        os.environ["OPENAI_API_KEY"] = response_data['key']
+        key = response_data['key']
+        os.environ["OPENAI_API_KEY"] = key
         openai.api_key = os.environ["OPENAI_API_KEY"]
-        # status success and key
-        return jsonify({'status': 'success', 'key' => response_data['key'] })
+        # status success and key response_data['key']
+        return  ({'status':})
     except ValueError as e:
         error_message = f"Error decoding JSON: {str(e)}"
         return jsonify({'error': error_message}), 500
