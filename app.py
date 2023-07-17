@@ -63,6 +63,7 @@ def ask():
         return "I'm sorry, I couldn't generate a response."
 
 @app.route('/send_prompt', methods=['POST'])
+@csrf.exempt
 def send_prompt():
     prompt = json.loads(request.data)['prompt']
     response = ask_bot(prompt)
