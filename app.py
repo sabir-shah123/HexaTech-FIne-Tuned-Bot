@@ -49,7 +49,7 @@ def domain_auth():
         os.environ["OPENAI_API_KEY"] = key
         openai.api_key = os.environ["OPENAI_API_KEY"]
         # status success and key response_data['key']
-        return  ({'status':})
+        return  ({'status': key})
     except ValueError as e:
         error_message = f"Error decoding JSON: {str(e)}"
         return jsonify({'error': error_message}), 500
