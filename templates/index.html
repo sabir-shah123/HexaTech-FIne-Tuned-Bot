@@ -175,6 +175,21 @@
       animation: typing-indicator-animation 1s infinite ease-in-out;
     }
 
+    .typing-indicator .dot-1 {
+      background-color: #ccc;
+      /* First dot color */
+    }
+
+    .typing-indicator .dot-2 {
+      background-color: #ff0000;
+      /* Second dot color */
+    }
+
+    .typing-indicator .dot-3 {
+      background-color: #00ff00;
+      /* Third dot color */
+    }
+
     @keyframes typing-indicator-animation {
 
       0%,
@@ -211,9 +226,9 @@
         <div class="bot-avatar">
           <img src="https://img.icons8.com/nolan/64/chatbot.png" alt="Bot Icon">
         </div>
-         <div class="message-bubble">
-              Hi, I'm HexaBot. I'm here to help you with your queries. Please type your query below.
-         </div>
+        <div class="message-bubble">
+          Hi, I'm HexaBot. I'm here to help you with your queries. Please type your query below.
+        </div>
       </div>
     </div>
 
@@ -358,9 +373,9 @@
         </div>
         <div class="message-bubble">
           <div class="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span class="dot-1"></span>
+            <span class="dot-2"></span>
+            <span class="dot-3"></span>
           </div>
         </div>
       `;
@@ -447,11 +462,11 @@
           toastr.error("Seems, something went wrong. Please try again later.");
         });
 
-        // delete the typing indicator
-        var typingIndicator = document.querySelector(".typing-indicator");
-        if (typingIndicator) {
-           $(".typing-indicator").closest(".bot-message").remove();
-        }
+      // delete the typing indicator
+      var typingIndicator = document.querySelector(".typing-indicator");
+      if (typingIndicator) {
+        $(".typing-indicator").closest(".bot-message").remove();
+      }
 
     };
 
