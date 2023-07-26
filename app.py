@@ -93,7 +93,7 @@ def send_prompt():
     ).replace("www.", "")
     file_path = folder + "/index.json"
     print(file_path)
-    response = ask_bot(prompt, file_path)
+    response = ask_bot(prompt, 'index.json')
     return response
 
 
@@ -121,8 +121,4 @@ def ask_bot(prompt, input_index="index.json"):
 
 
 if __name__ == "__main__":
-    # training_folder= 'data'
-    # if not os.path.exists(training_folder):
-    #     print("Training folder does not exist. Please create a folder named " + training_folder + " and add training files to it.")
-    #     exit()
     app.run(debug=True)
