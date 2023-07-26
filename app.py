@@ -92,8 +92,7 @@ def send_prompt():
         "http://", ""
     ).replace("www.", "")
     file_path = folder + "/index.json"
-    print(file_path)
-    response = ask_bot(prompt, 'index.json')
+    response = ask_bot(prompt)
     return response
 
 
