@@ -1,5 +1,7 @@
 from gpt_index import SimpleDirectoryReader, GPTSimpleVectorIndex, LLMPredictor, PromptHelper
 from langchain import OpenAI
+import os
+import openai
 
 def construct_index(directory_path):
     max_input_size = 4096
@@ -22,5 +24,24 @@ if __name__ == '__main__':
     if not os.path.exists(training_folder):
         print("Training folder does not exist. Please create a folder named " + training_folder + " and add training files to it.")
         exit()
+    
+    os.environ["OPENAI_API_KEY"] ="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"
+    openai.api_key = os.environ["OPENAI_API_KEY"]
     index = construct_index(training_folder)
     index.save_to_disk('index.json')
+    # download the saved file in the computer
+    down = GPTSimpleVectorIndex.load_from_disk('index.json')
+    print(down.query('Write Company Name : '))
+    # download
+    files.download('index.json')
+
+    
+
+
+
+   
+
+
+
+
+
